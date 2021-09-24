@@ -2,19 +2,23 @@ import React from 'react';
 import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 
 import successStories from '../data/successStories';
 
-const BLIND_75_URL = 'https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-75-LeetCode-Questions-to-Save-Your-Time-OaM1orEU';
+const BLIND_75_URL =
+  'https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-75-LeetCode-Questions-to-Save-Your-Time-OaM1orEU';
 
 function Home() {
   const context = useDocusaurusContext();
   const {siteConfig = {}} = context;
   return (
-    <Layout title={siteConfig.title} description={siteConfig.tagline}>
+    <Layout
+      title="Technical Interview Guide for Busy Engineers"
+      description={siteConfig.tagline}>
       <header className={classnames('hero', styles.heroBanner)}>
         <div className="container">
           <img
@@ -22,15 +26,16 @@ function Home() {
             src={useBaseUrl('img/logo.svg')}
           />
           <h1 className="hero__title">{siteConfig.title}</h1>
-          <p className="hero__subtitle">{siteConfig.tagline} <br/>
-            Brought to you by the author of the <a href={BLIND_75_URL} target="_blank">Blind 75 List</a>
+          <p className="hero__subtitle">
+            {siteConfig.tagline} <br />
+            Brought to you by the author of the{' '}
+            <a href={BLIND_75_URL} target="_blank">
+              Blind 75 List
+            </a>
           </p>
           <div className={styles.buttons}>
             <a
-              className={classnames(
-                'button button--primary button--lg',
-                styles.getStarted,
-              )}
+              className={classnames('button button--primary button--lg')}
               href={useBaseUrl('introduction')}>
               Get Started&nbsp;&nbsp;→
             </a>
@@ -48,42 +53,78 @@ function Home() {
         </div>
       </header>
       <div>
-        <div
-          className={classnames(
-            'margin-bottom--lg',
-            'padding-vert--lg',
-            styles.sectionPrimary,
-          )}>
-          <div className="container">
-            <div className="row">
-              <div className="col col--8 col--offset-2">
-                <div className="margin-vert--lg text--center">
-                  <h2 className={styles.sectionPrimaryTitle}>
-                    <div align="center">
-                      <strong>
-                        Get paid more. Receive risk-free salary negotiation help
-                        from Moonchaser. You pay nothing unless your offer is
-                        increased.
-                      </strong>
+        {/* // Because the SSR and client output can differ and hydration doesn't patch attribute differences, 
+        we'll render this on the browser only. */}
+        <BrowserOnly>
+          {() => (
+            <div
+              className={classnames(
+                'margin-bottom--lg',
+                'padding-vert--lg',
+                styles.sectionSponsor,
+              )}>
+              <div className="container">
+                <div className="row">
+                  <div className="col col--8 col--offset-2">
+                    <div className="margin-vert--lg text--center">
+                      {Math.random() > 0.5 ? (
+                        <div>
+                          <h2 className={styles.sectionSponsorTitle}>
+                            <strong>
+                              Get paid more. Receive risk-free salary
+                              negotiation help from Moonchaser. You pay nothing
+                              unless your offer is increased.
+                            </strong>
+                          </h2>
+                          <div className="margin-vert--lg">
+                            <a
+                              className="button button--secondary button--lg"
+                              href="https://www.moonchaser.io/?utm_source=techinterviewhandbook&utm_medium=referral&utm_content=website_homepage"
+                              rel="noreferrer noopener"
+                              target="_blank"
+                              onClick={() => {
+                                window.gtag(
+                                  'event',
+                                  'moonchaser.homepage.click',
+                                );
+                              }}>
+                              Get Risk-free Negotiation Help&nbsp;&nbsp;→
+                            </a>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <h2 className={styles.sectionSponsorTitle}>
+                            <strong>
+                              Get paid, not played. Chat with former tech
+                              recruiters who'll guide you on exactly what to say
+                              to negotiate a higher offer.
+                            </strong>
+                          </h2>
+                          <div className="margin-vert--lg">
+                            <a
+                              className="button button--secondary button--lg"
+                              href="https://www.levels.fyi/services/?ref=TechInterviewHandbook&utm_source=techinterviewhandbook&utm_medium=referral&utm_content=website_homepage"
+                              rel="noreferrer noopener"
+                              target="_blank"
+                              onClick={() => {
+                                window.gtag(
+                                  'event',
+                                  'levelsfyi.homepage.click',
+                                );
+                              }}>
+                              Get Negotiation Help&nbsp;&nbsp;→
+                            </a>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </h2>
-                  <div className="margin-vert--lg">
-                    <a
-                      className="button button--secondary button--lg"
-                      href="https://www.moonchaser.io/?utm_source=techinterviewhandbook&utm_medium=referral&utm_content=website_homepage"
-                      rel="noreferrer noopener"
-                      target="_blank"
-                      onClick={() => {
-                        window.gtag('event', 'moonchaser.click');
-                      }}>
-                      Find Out More&nbsp;&nbsp;→
-                    </a>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          )}
+        </BrowserOnly>
         <div className={classnames('margin-vert--lg', 'padding-vert--lg')}>
           <div className="container">
             <div className="row">
@@ -96,50 +137,97 @@ function Home() {
                   )}>
                   Why Tech Interview Handbook?
                 </h2>
-                <div className="row margin-vert--lg">
-                  <div className="col">
-                    <h3>From Zero to Hero</h3>
+                <div className={classnames('row', styles.featuresRow)}>
+                  <div
+                    className={classnames(
+                      'col',
+                      'col--4',
+                      styles.featuresRowItem,
+                    )}>
+                    <h3>💯 Go From Zero to Hero</h3>
                     <p>
                       Go from zero to tech interview hero with this handbook. No
                       prior interview experience needed.
                     </p>
+                    <a href={useBaseUrl('introduction')}>
+                      <strong>Learn more</strong>
+                    </a>
                   </div>
-                  <div className="col">
-                    <h3>Curated Practice Questions</h3>
+                  <div
+                    className={classnames(
+                      'col',
+                      'col--4',
+                      styles.featuresRowItem,
+                    )}>
+                    <h3>📝 Curated Practice Questions</h3>
                     <p>
                       No one has time to practice a few hundred LeetCode
                       questions. We tell you which are the best questions to
-                      practice. We created the <a href={BLIND_75_URL} target="_blank">Blind 75 List</a>.
+                      practice. We created the{' '}
+                      <a href={BLIND_75_URL} target="_blank">
+                        Blind 75 List
+                      </a>
+                      .
                     </p>
+                    <a href={useBaseUrl('best-practice-questions')}>
+                      <strong>Learn more</strong>
+                    </a>
                   </div>
-                  <div className="col">
-                    <h3>Interview Cheatsheet</h3>
+                  <div
+                    className={classnames(
+                      'col',
+                      'col--4',
+                      styles.featuresRowItem,
+                    )}>
+                    <h3>✅ Interview Cheatsheet</h3>
                     <p>
                       Straight-to-the-point Do's and Don'ts during an interview.
                       Knowing these, the battle is already half won.
                     </p>
+                    <a href={useBaseUrl('cheatsheet')}>
+                      <strong>Learn more</strong>
+                    </a>
                   </div>
-                </div>
-                <div className="row margin-vert--lg">
-                  <div className="col">
-                    <h3>Practical Algorithm Tips</h3>
+                  <div
+                    className={classnames(
+                      'col',
+                      'col--4',
+                      styles.featuresRowItem,
+                    )}>
+                    <h3>💁‍♀️ Practical Algorithm Tips</h3>
                     <p>
                       Practical tips for every algorithm topic - common
                       techniques and corner cases to look out for.
                     </p>
+                    <a href={useBaseUrl('algorithms/introduction')}>
+                      <strong>Learn more</strong>
+                    </a>
                   </div>
-                  <div className="col">
-                    <h3>Behavioral Questions</h3>
+                  <div
+                    className={classnames(
+                      'col',
+                      'col--4',
+                      styles.featuresRowItem,
+                    )}>
+                    <h3>💬 Behavioral Questions</h3>
                     <p>
                       Check out what behavioral questions companies commonly ask
                       and you can prepare your answers ahead of time.
                     </p>
+                    <a href={useBaseUrl('behavioral-questions')}>
+                      <strong>Learn more</strong>
+                    </a>
                   </div>
-                  <div className="col">
-                    <h3>Tested and Proven</h3>
+                  <div
+                    className={classnames(
+                      'col',
+                      'col--4',
+                      styles.featuresRowItem,
+                    )}>
+                    <h3>🧪 Tested and Proven</h3>
                     <p>
-                      Countless engineers have gotten their dream jobs with its
-                      help.
+                      Countless engineers have gotten their dream jobs with the
+                      help of Tech Interview Handbook.
                     </p>
                   </div>
                 </div>
@@ -148,11 +236,38 @@ function Home() {
           </div>
         </div>
         <div
-          className={classnames(
-            'margin-vert--lg',
-            'padding-vert--lg',
-            styles.sectionAlt,
-          )}>
+          className={classnames('padding-vert--lg', styles.sectionSponsorAlt)}>
+          <div className="container">
+            <div className="row">
+              <div className="col col--8 col--offset-2">
+                <div className="margin-vert--lg text--center">
+                  <div>
+                    <h2 className={styles.sectionSponsorTitle}>
+                      <strong>
+                        Looking for high quality interview courses? Educative
+                        offers a ton of great courses to improve your interview
+                        game.
+                      </strong>
+                    </h2>
+                    <div className="margin-vert--lg">
+                      <a
+                        className="button button--secondary button--lg"
+                        href="https://www.educative.io/explore?search_string=interview&aff=x23W"
+                        rel="noreferrer noopener"
+                        target="_blank"
+                        onClick={() => {
+                          window.gtag('event', 'educative.homepage.click');
+                        }}>
+                        Get Started&nbsp;&nbsp;→
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={classnames('padding-vert--lg', styles.sectionAlt)}>
           <div className="container">
             <div className="row">
               <div className="col col--6 col--offset-3">
@@ -173,7 +288,7 @@ function Home() {
                       <div className="avatar">
                         <img className="avatar__photo" src={user.thumbnail} />
                         <div className="avatar__intro">
-                          <h4 className="avatar__name">{user.name}</h4>
+                          <div className="avatar__name">{user.name}</div>
                           <small className="avatar__subtitle">
                             {user.title}
                           </small>
@@ -195,12 +310,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div
-          className={classnames(
-            'margin-vert--lg',
-            'padding-vert--lg',
-            'text--center',
-          )}>
+        <div className={classnames('padding-vert--lg', 'text--center')}>
           <div className="container">
             <div className="row">
               <div className="col col--8 col--offset-2">
